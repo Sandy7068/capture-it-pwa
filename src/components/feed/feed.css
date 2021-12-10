@@ -1,0 +1,100 @@
+@media screen and (max-width:400px) {
+    #banner{
+        height:300px;
+        margin-top: 5px;
+        width:300px;
+        border-radius: 200px;
+    }
+    #feed{
+        max-width: 300px;
+        border-radius: 20px;
+    }
+    #plus{
+        position:fixed;
+        bottom: 15px;
+        right:62px
+    }
+    .card{
+        width: fit-content;
+        margin-left: 60px;
+    }
+
+    #feed{
+        width:200px;
+        margin-top: 10px;
+    }
+
+    #new-post{
+        display: inline-block;
+        position: fixed;
+        bottom: 5px;
+        right: 48px;
+        z-index: 99;
+        height: 45px;
+        width: 45px;
+        border: none;
+        outline: none;
+        background-color: rgb(230, 165, 112);
+        color: bisque;
+        cursor: pointer;
+        border-radius: 50%;
+        padding: 22.5px;
+          
+      }
+}
+
+@media screen and (min-width:400px) {
+    #banner{
+        max-height:400px;
+        width: 90%;
+        margin-top: 5px;
+        border-radius: 300px;
+        max-width: 500px;
+    }
+    #feed{
+        
+        width: 80%;
+        border-radius: 20px;
+    }
+    .card{
+        text-align: center;
+        width:80%;
+        margin-top: 10px;
+    }
+    #plus{
+        position:fixed;
+        bottom: 22px;
+        right:62px
+    }
+    #new-post{
+        display: inline-block;
+        position: fixed;
+        bottom: 10px;
+        right: 48px;
+        z-index: 99;
+        height: 45px;
+        width: 45px;
+        border: none;
+        outline: none;
+        background-color: rgb(230, 165, 112);
+        color: bisque;
+        cursor: pointer;
+        border-radius: 50%;
+        padding: 22.5px;
+          
+      }
+}
+
+.card-header, .card-footer
+{
+    background-color: rgb(230, 165, 112);
+}
+
+.card{
+    background-color: bisque;
+    max-width: 450px;
+    
+}
+
+
+
