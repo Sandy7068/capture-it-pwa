@@ -17,6 +17,8 @@ export default class Feed extends Component {
         this.setState({showFeed : !this.state.showFeed});
     }
 
+    
+
     render() {
         if(this.state.showFeed === true){
             return (
