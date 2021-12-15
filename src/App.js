@@ -12,15 +12,6 @@ function App() {
 
  console.log(ref)
 
- ref.onSnapshot((querySnapshot)=>{
-   const data =[];
-
-   querySnapshot.forEach((doc)=>{
-     data.push(doc.data())
-   })
-
-   console.log(data[0].location)
- })
 
   return (
     <div className="App">
