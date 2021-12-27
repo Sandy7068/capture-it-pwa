@@ -6,9 +6,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Footer from './components/footer/Footer';
 import NewPost from './components/new-post/NewPost';
 
+import { Provider } from './context';
+
 export default class App extends Component {
 render(){
   return (
+    <Provider>
     <Router>
       <div className="App">
       <Header></Header>
@@ -19,7 +22,7 @@ render(){
       <Footer></Footer>
     </div>
     </Router>
-    
+    </Provider>
   );
 }
   

@@ -1,0 +1,5 @@
+#delete-button,
+#edit-button {
+  float: right;
+  cursor: pointer;
+}
