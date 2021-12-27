@@ -6,7 +6,7 @@ export default class Footer extends Component {
             <div>
                 <footer>
                     <hr></hr>
-                    <p>App Version v1.0.0</p>
+                    <p>App Version v1.0.1</p>
                 </footer>
             </div>
         )
