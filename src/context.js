@@ -28,7 +28,7 @@ export class Provider extends Component{
     componentDidMount(){
         firestoreDB.onSnapshot((querySnapshot)=>{
             querySnapshot.forEach((doc)=>{
-              data.push(doc.data())
+               data.push(doc.data())
             });
             this.setState({posts:data});
       });
