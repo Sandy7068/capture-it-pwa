@@ -40,20 +40,30 @@ const EditPost = () => {
       setLocation("");
       
       var formData = {
-        id,
         title,
       location
     };
 
     console.log(formData)
       
-        
-      firestoreDB.doc(id).update(formData).then(()=>{
+      
+  firestoreDB.where('id','==', id)
+  .get()
+  .then((querySnapshot)=>{
+    querySnapshot.forEach((doc)=>{
+      doc.ref.update(formData).then(()=>{
         alert("Your Post has been updated");
+        window.location.reload();
+        setTimeout(()=>{
+          navigate('/') 
+        },2000)
         
-        navigate('/')
       })
+      
+    });
+      
    
+  });
   }
  
 
