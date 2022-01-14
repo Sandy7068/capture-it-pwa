@@ -1,3 +1,6 @@
+
+
+
 //Get access to camera
 export const initializeMedia = (videoDiv)=>{
         
@@ -34,6 +37,8 @@ export const initializeMedia = (videoDiv)=>{
 //project the videofeed from a camera to a canvas and return blob of the screenshot
 //and then store that blob to firestore fileref
 export const imagetoBlob = (video,canvas,firestorefileRef)=>{
+    
+
 var picture;
     var context = canvas.getContext('2d');
     context.drawImage(video,0,0,canvas.width,video.videoHeight/(video.videoWidth/canvas.width));
@@ -46,10 +51,16 @@ var picture;
 
     fetch(picture,{ credentials: 'include', mode: 'cors' })
     .then(res=>res.blob())
-    .then(blob=>{
-        firestorefileRef.put(blob).then(()=>{
-            console.log("Image Uploaded")
-        })
+    .then((blob)=>{
         
-    });   
+         firestorefileRef.put(blob).then(()=>{
+             return firestorefileRef.getDownloadURL();
+         }).then(res=>{return res})   
+    })
+        
+        
+        
+
+        
+     
 }

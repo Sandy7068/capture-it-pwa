@@ -2,87 +2,106 @@ import React, { useState, useRef, useEffect} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import firebase from '../../firebase';
 import {v4 as uuidv4} from 'uuid';
-import { initializeMedia, imagetoBlob } from '../../helper-functions';
+import { initializeMedia} from '../../helper-functions';
 
 //Declaring variable to store imageURL that we get from photo snap
-var picture;
 
 const NewPost = () => {
+  //Use State Hooks
   const [loader, setloader] = useState(false);
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(`image-${uuidv4()}`);
 
   //useRef for conditional rendering and media options
   const captureButton = useRef();
   const videoFeed = useRef();
   const canvasFeed = useRef();
-  
 
-  function onSubmit(e){
-    e.preventDefault();
-      const firestoreDB = firebase.firestore().collection('posts');
-      var formData = {
-        id:uuidv4(),
-        title,
-        location,
-      image}; 
-      firestoreDB.add(formData).then(()=>{
-        alert("your Post has been submitted")
-      });
-
+  //Firestore Storage
+  const firebaseStorage = firebase.storage().ref();
   
-      
-      setTitle("");
-      setLocation("");
-      setImage("");
-   
+  //submit function for formData
+    function onSubmit(e){
+      e.preventDefault();
+        const firestoreDB = firebase.firestore().collection('posts');
+        var formData = {
+          id:uuidv4(),
+          title,
+          location,
+        image}; 
+        firestoreDB.add(formData).then(()=>{
+          alert("your Post has been submitted")
+        });
+
+        //Resetting the state back to Normal
+        setTitle("");
+        setLocation("");
+        setImage("");
+    
+    }
+
+  //File change Handler for manual photo upload
+  const onFileChange = async(e)=>{
+    const file = e.target.files[0];
+    const fileRef = firebaseStorage.child(file.name);
+    await fileRef.put(file).then(()=>{
+      console.log('file uploaded')
+    });
+    const fileURL = await fileRef.getDownloadURL();
+    setImage(fileURL);
+    console.log("File uploaded")
   }
 
-  const refTest = ()=>{
-    if(loader===false){
-        captureButton.current.style.display = 'none';
-        canvasFeed.current.style.display = 'none';
-    }else{
-        captureButton.current.style.display = 'block';
-    }   
-}
 
-  const invisible = {display:'none'};
-  const firebaseStorage = firebase.storage().ref();
 
-  useEffect(()=>{
-    refTest();
-      if(loader===true){
-        var videoPlayer = document.querySelector('#player');
-        initializeMedia(videoPlayer);
-      }else return;
-    
-  },[loader])
-
+  const animate = ()=>{
+    videoFeed.current.style.display = 'none';
+    canvasFeed.current.style.display = 'none';
+    captureButton.current.style.display = 'none';
+  }
   
-const onFileChange = async(e)=>{
-  const file = e.target.files[0];
-  const fileRef = firebaseStorage.child(file.name);
-  await fileRef.put(file).then(()=>{
-    console.log('file uploaded')
-  });
-  const fileURL = await fileRef.getDownloadURL();
-  setImage(fileURL);
-  console.log("File uploaded")
-}
 
-
-
-
- 
-  const handleClick = ()=>{setloader(true)}
+  useEffect(() => {
+    animate();
+  }, [])
+  
+  const handleClick = ()=>{
+    videoFeed.current.style.display = 'block';
+    captureButton.current.style.display = 'block';
+    var videoPlayer = document.querySelector('#player');
+    initializeMedia(videoPlayer);
+  }
 
   const captureImage = ()=>{
+    canvasFeed.current.style.display = 'block';
+    
     var videoPlayer = document.querySelector('#player');
     var canvas = document.querySelector('#canvas');
+    
     const fileRef = firebaseStorage.child(image);
-    imagetoBlob(videoPlayer,canvas,fileRef)
+    var picture;
+    var context = canvas.getContext('2d');
+
+    context.drawImage(videoPlayer,0,0,canvas.width,videoPlayer.videoHeight/(videoPlayer.videoWidth/canvas.width));
+    videoPlayer.srcObject.getVideoTracks().forEach((track)=>{
+        track.stop();
+        //console.log("Photo Taken");
+    });
+    
+    picture = canvas.toDataURL();
+
+    fetch(picture,{ credentials: 'include', mode: 'cors' })
+    .then(res=>res.blob())
+    .then((blob)=>{
+        
+         fileRef.put(blob).then(()=>{
+             return fileRef.getDownloadURL();
+         }).then(res=>{
+           setImage(res)})   
+    })
+    
+    videoFeed.current.style.display = 'none';
  
 }
 
