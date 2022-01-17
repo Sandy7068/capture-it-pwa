@@ -1,1 +1,3 @@
-<h1>Capture-It!!</h1>
+# Capture-It!!
+
+A Progressive WebApp (PWA) created with React + Firebase.
