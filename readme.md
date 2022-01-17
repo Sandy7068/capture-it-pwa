@@ -1,9 +1,12 @@
 # Capture-It!!
 
 A Progressive WebApp (PWA) created with ReactJs + Firebase.
+Capture your life's precious moments and store them in your personal diary.
+
+<img src="/src/screenshots/capture-it-screenshot"></img>
 This project demonstrates the use of service workers, cache strategies and progressive web design techniques to emulate native app behavior for a webApp.
 
-# Run
+# How to Use
 
 To run the project
 
