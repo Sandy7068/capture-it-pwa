@@ -10,6 +10,6 @@ This project demonstrates the use of service workers, cache strategies and progr
 
 To run the project
 
-- Execute "npm i to install" all the dependencies.
+- Execute "npm i" to install all the dependencies.
 - Create the firebase.js file in the src/ folder as per the firebase documentation https://firebase.google.com/docs/firestore/quickstart
 - Execute "npm start" to run on the localhost.
